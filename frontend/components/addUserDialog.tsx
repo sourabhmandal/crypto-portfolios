@@ -114,7 +114,27 @@ export function AddUserDialog() {
                 <FormItem>
                   <FormLabel>Wallet Address</FormLabel>
                   <FormControl>
-                    <Input placeholder="0x986479abd87ed" {...field} />
+                    <Input
+                      placeholder="0x986479abd87ed"
+                      {...field}
+                      onChange={({ target }) => {
+                        form.setValue("walletAddress", target.value);
+
+                        if (
+                          /^0x[a-fA-F0-9]{40}$/g.test(target.value) ||
+                          /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/g.test(
+                            target.value
+                          )
+                        ) {
+                          form.setError("walletAddress", {
+                            message: "invalid wallet address",
+                            type: "validate",
+                          });
+                        } else {
+                          form.clearErrors("walletAddress");
+                        }
+                      }}
+                    />
                   </FormControl>
                   <FormDescription>
                     wallet address of the person
