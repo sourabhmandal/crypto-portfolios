@@ -52,7 +52,7 @@ export type MutationUpsertCoinArgs = {
 
 export type MutationUpsertUserArgs = {
   username?: InputMaybe<Scalars['String']['input']>;
-  walletAddress: Scalars['String']['input'];
+  walletAddress?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Networth = {
@@ -66,6 +66,7 @@ export type Query = {
   __typename?: 'Query';
   /** will return multiple Person instances */
   getAllCoins?: Maybe<Array<Maybe<Coin>>>;
+  getAllUsers?: Maybe<Array<Maybe<User>>>;
   getAllWalletBalances?: Maybe<Array<Maybe<Balance>>>;
   getUserByUserName?: Maybe<User>;
   getUserNetworth?: Maybe<Networth>;

@@ -42,3 +42,14 @@ export const getUserByUserNameSvc = async (username: string) => {
     throw new Error("database error occured");
   }
 };
+
+
+export const getAllUsersSvc = async () => {
+  try {
+    const data: UserType[] = (await User.find()) as UserType[];
+    return data;
+  } catch (err) {
+    console.error(err);
+    throw new Error("database error occured");
+  }
+};

@@ -40,6 +40,13 @@ query GetUserDetailQuery($_username: String) {
   }
 }
 
+query GetAllUsersQuery {
+  getAllUsers {
+    walletAddress
+    username
+  }
+}
+
 #-----------------------  BALANCE  ------------------------
 mutation UpsertBalanceMut(
   $_walletAddress: String

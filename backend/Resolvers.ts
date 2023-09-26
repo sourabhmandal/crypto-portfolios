@@ -1,7 +1,11 @@
 import { Balance as BalanceType } from "./models/types";
 import { getAllWalletBalancesSvc, upsertBalanceSvc } from "./service/balance";
 import { getAllCoinsSvc, upsertCoinSvc } from "./service/coin";
-import { getUserByUserNameSvc, upsertUserSvc } from "./service/user";
+import {
+  getAllUsersSvc,
+  getUserByUserNameSvc,
+  upsertUserSvc,
+} from "./service/user";
 const Resolvers = {
   Query: {
     getAllCoins: async () => await getAllCoinsSvc(), //if the user runs the getAllPeople command
@@ -40,6 +44,8 @@ const Resolvers = {
 
     getUserByUserName: async (_: any, args: any) =>
       await getUserByUserNameSvc(args.username),
+
+    getAllUsers: async () => await getAllUsersSvc(),
   },
   Mutation: {
     //create our mutation:

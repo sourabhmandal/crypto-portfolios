@@ -31,31 +31,18 @@ export const Schema = gql`
     getAllWalletBalances(walletAddress: String, symbol: String): [Balance]
     getUserNetworth(walletAddress: String): Networth
     getUserByUserName(username: String): User
-
-    # getUserBalances(walletAddress: String): Balance
+    getAllUsers: [User]
   }
 
   type Mutation {
     #the addPerson commmand will accept an argument of type String.
     #it will return a 'Person' instance.
     upsertCoin(symbol: String, price: String): Coin
-    upsertUser(username: String, walletAddress: String!): User
+    upsertUser(username: String, walletAddress: String): User
     upsertBalance(
       symbol: String
       walletAddress: String
       balance: String
     ): Balance
-
-    # deleteCoinPrice(symbol: String): Coin
-    # updateUser(
-    #   username: String
-    #   newUserName: String!
-    #   walletAddress: String!
-    # ): User
-    # deleteBalance(
-    #   walletAddress: String
-    #   symbol: String
-    #   balance: Float!
-    # ): Balance
   }
 `;
