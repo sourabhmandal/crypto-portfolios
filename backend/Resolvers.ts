@@ -31,7 +31,9 @@ const Resolvers = {
         const value = data.value ?? 0;
         if (value > 0) {
           responseData.asset += value;
-        } else if (value < 0) {
+        }
+
+        if (value < 0) {
           responseData.debt += value;
         }
         responseData.networth += value;
@@ -50,7 +52,8 @@ const Resolvers = {
   Mutation: {
     //create our mutation:
     upsertCoin: (_: any, args: any) => {
-      return upsertCoinSvc(args.symbol, args.price as number);
+      const price = parseFloat(args.price);
+      return upsertCoinSvc(args.symbol, price ?? 0);
     },
 
     upsertUser: (_: any, args: any) => {

@@ -27,16 +27,13 @@ import { useMutation } from "@apollo/client";
 
 import { PlusIcon, StopCircleIcon } from "@heroicons/react/24/solid";
 
-interface DialogDemoProps extends React.HTMLAttributes<HTMLDivElement> {
-  //playlists: any;
-}
 
 interface AddCoinFormData {
   symbol: string;
   price: number;
 }
 
-export function AddCoinDialog({}: DialogDemoProps) {
+export function AddCoinDialog() {
   const [mutate, { loading, error }] = useMutation(UpsertCoinMutDocument);
   const { toast } = useToast();
 

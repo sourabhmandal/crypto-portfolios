@@ -121,10 +121,10 @@ export function AddUserDialog() {
                         form.setValue("walletAddress", target.value);
 
                         if (
-                          /^0x[a-fA-F0-9]{40}$/g.test(target.value) ||
+                          /^0x[a-fA-F0-9]{40}$/g.test(target.value) == false ||
                           /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/g.test(
                             target.value
-                          )
+                          ) == false
                         ) {
                           form.setError("walletAddress", {
                             message: "invalid wallet address",
