@@ -87,10 +87,21 @@ export function AddUserDialog() {
                 <FormItem>
                   <FormLabel>User Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="john_doe" {...field} />
+                    <Input
+                      placeholder="john_doe"
+                      {...field}
+                      {...field}
+                      onChange={({ target }) => {
+                        form.setValue(
+                          "username",
+                          target.value.replace(/[^a-zA-Z]/g, "")
+                        );
+                      }}
+                    />
                   </FormControl>
                   <FormDescription>
-                    This is the username of the person
+                    This is the username of the person: allowed characters [a-z]
+                    [A-Z]
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

@@ -26,7 +26,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <>
+    <div className="flex flex-col h-screen items-center justify-center">
       <div className="flex justify-center">
         <AddUserDialog />
       </div>
@@ -47,7 +47,7 @@ const Home: NextPage = () => {
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 export default Home;

@@ -32,20 +32,12 @@ interface BalancesTableProps extends React.HTMLAttributes<HTMLDivElement> {
       } | null)[]
     | null
     | undefined;
-  dataGetUserDetail:
-    | {
-        __typename?: "User" | undefined;
-        username?: string | null | undefined;
-        walletAddress?: string | null | undefined;
-      }
-    | null
-    | undefined;
 }
 
 export function BalancesTable({
+  username,
   dataGetAllWalletBalance,
   dataGetAllCoins,
-  dataGetUserDetail,
 }: BalancesTableProps) {
   return (
     <div>
@@ -53,7 +45,7 @@ export function BalancesTable({
       <div className="flex justify-between items-center mt-5">
         <div className="flex items-center my-2">
           <WalletIcon className="h-6 w-6" />
-          <p className="text-2xl p-2 pr-6">Wallet</p>
+          <p className="text-2xl p-2 pr-6">{`${username}'s Wallet`}</p>
 
           <div className="flex items-center space-x-2">
             <Checkbox id="terms" />

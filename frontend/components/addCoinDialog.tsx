@@ -87,7 +87,13 @@ export function AddCoinDialog({}: DialogDemoProps) {
                 <FormItem>
                   <FormLabel>Symbol</FormLabel>
                   <FormControl>
-                    <Input placeholder="BTC" {...field} />
+                    <Input
+                      placeholder="BTC"
+                      {...field}
+                      onChange={({ target }) => {
+                        form.setValue("symbol", target.value.toUpperCase());
+                      }}
+                    />
                   </FormControl>
                   <FormDescription>
                     This is the symbol of the coin
