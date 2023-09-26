@@ -19,13 +19,6 @@ async function startApolloServer(schema: any, resolvers: any) {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   }) as any;
 
-  // connect with DB
-  // await MongoDBClient(
-  //   ,
-  //   process.env.MONGO_DB_NAME ?? "",
-  //   process.env.CRYPTO_PORTFOLIO_COLLECTION_NAME ?? ""
-  // );
-
   try {
     mongoose.connect(process.env.MONGO_URI ?? "");
   } catch (error) {
