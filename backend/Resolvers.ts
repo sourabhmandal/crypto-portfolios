@@ -9,7 +9,6 @@ const Resolvers = {
       return await getAllWalletBalancesSvc(args.walletAddress, args.symbol);
     },
     getUserNetworth: async (_: any, args: any) => {
-      console.log(args);
       const resp: BalanceType[] = await getAllWalletBalancesSvc(
         args.walletAddress
       );

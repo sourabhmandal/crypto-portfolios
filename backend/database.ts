@@ -8,7 +8,6 @@ export const MongoDBClient = async (
   db_name: string,
   collection_name: string
 ): Promise<Collection | undefined> => {
-  console.log(uri);
   const client: MongoClientType = new MongoClient(uri ?? "", {
     serverApi: {
       version: ServerApiVersion.v1,
