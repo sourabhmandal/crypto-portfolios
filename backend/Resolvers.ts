@@ -1,25 +1,63 @@
-import people from "./dataset"; //get all of the available data from our database.
+import { Balance as BalanceType } from "./models/types";
+import { getAllWalletBalancesSvc, upsertBalanceSvc } from "./service/balance";
+import { getAllCoinsSvc, upsertCoinSvc } from "./service/coin";
+import { getUserByUserNameSvc, upsertUserSvc } from "./service/user";
 const Resolvers = {
   Query: {
-    getAllCurrency: () => people, //if the user runs the getAllPeople command
-    //if the user runs the getPerson command:
-    getCurrencyBySymbol: (_: any, args: any) => {
-      console.log(args);
-      //get the object that contains the specified ID.
-      return people.find((person) => person.id === args.symbol);
+    getAllCoins: async () => await getAllCoinsSvc(), //if the user runs the getAllPeople command
+    getAllWalletBalances: async (_: any, args: any) => {
+      return await getAllWalletBalancesSvc(args.walletAddress, args.symbol);
     },
+    getUserNetworth: async (_: any, args: any) => {
+      console.log(args);
+      const resp: BalanceType[] = await getAllWalletBalancesSvc(
+        args.walletAddress
+      );
+
+      let responseData: {
+        asset: number;
+        debt: number;
+        networth: number;
+      } = {
+        asset: 0,
+        debt: 0,
+        networth: 0,
+      };
+
+      resp.forEach((data) => {
+        const value = data.value ?? 0;
+        if (value > 0) {
+          responseData.asset += value;
+        } else if (value < 0) {
+          responseData.debt += value;
+        }
+        responseData.networth += value;
+
+        return responseData;
+      });
+
+      return responseData;
+    },
+
+    getUserByUserName: async (_: any, args: any) =>
+      await getUserByUserNameSvc(args.username),
   },
   Mutation: {
     //create our mutation:
-    addCurrency: (_: any, args: any) => {
-      const newPerson = {
-        id: people.length + 1, //id field
-        symbol: args.symbol,
-        price: 0,
-        value: 0,
-      };
-      people.push(newPerson);
-      return newPerson; //return the new object's result
+    upsertCoin: (_: any, args: any) => {
+      return upsertCoinSvc(args.symbol, args.price as number);
+    },
+
+    upsertUser: (_: any, args: any) => {
+      return upsertUserSvc(args.username, args.walletAddress);
+    },
+    upsertBalance: (_: any, args: any) => {
+      const balance = args.balance ? args.balance : "0";
+      return upsertBalanceSvc(
+        args.walletAddress,
+        args.symbol,
+        balance as number
+      );
     },
   },
 };

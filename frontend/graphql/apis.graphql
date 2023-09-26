@@ -1,0 +1,75 @@
+query GetAllCoinSymbolsQuery {
+  getAllCoins {
+    #run the getAllPeople command
+    id
+    symbol
+  }
+}
+
+query GetAllCoinsCompleteDataQuery {
+  getAllCoins {
+    #run the getAllPeople command
+    id
+    symbol
+    price
+  }
+}
+
+mutation UpsertCoinMut($_symbol: String, $_price: String) {
+  #the argument will be of type Integer
+  upsertCoin(symbol: $_symbol, price: $_price) {
+    #get the person with the ID of 1
+    symbol
+    price
+    id
+  }
+}
+
+# ----------------------  USER  ---------------------------
+mutation UpsertUserMut($_username: String, $_walletAddress: String!) {
+  upsertUser(username: $_username, walletAddress: $_walletAddress) {
+    username
+    walletAddress
+  }
+}
+
+query GetUserDetailQuery($_username: String) {
+  getUserByUserName(username: $_username) {
+    username
+    walletAddress
+  }
+}
+
+#-----------------------  BALANCE  ------------------------
+mutation UpsertBalanceMut(
+  $_walletAddress: String
+  $_symbol: String
+  $_balance: String
+) {
+  #the argument will be of type Integer
+  upsertBalance(
+    walletAddress: $_walletAddress
+    symbol: $_symbol
+    balance: $_balance
+  ) {
+    #get the person with the ID of 1
+    walletAddress
+    balance
+  }
+}
+
+query GetAllWalletBalanceQuery($_walletAddress: String, $_symbol: String) {
+  getAllWalletBalances(walletAddress: $_walletAddress, symbol: $_symbol) {
+    walletAddress
+    balance
+    symbol
+    value
+  }
+}
+query GetUserNetWorthQuery($_walletAddress: String) {
+  getUserNetworth(walletAddress: $_walletAddress) {
+    networth
+    asset
+    debt
+  }
+}

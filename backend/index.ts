@@ -3,13 +3,11 @@ import { ApolloServer } from "apollo-server-express";
 import dotenv from 'dotenv';
 import express from 'express';
 import http from "http";
+import mongoose from "mongoose";
 import Resolvers from "./Resolvers";
 import { Schema } from "./Schema";
-import MongoDBClient from './database';
-//For env File 
+//For env File
 dotenv.config();
-
-
 
 async function startApolloServer(schema: any, resolvers: any) {
   const app = express();
@@ -22,22 +20,29 @@ async function startApolloServer(schema: any, resolvers: any) {
   }) as any;
 
   // connect with DB
+  // await MongoDBClient(
+  //   ,
+  //   process.env.MONGO_DB_NAME ?? "",
+  //   process.env.CRYPTO_PORTFOLIO_COLLECTION_NAME ?? ""
+  // );
+
   try {
-    // Connect the client to the server (optional starting in v4.7)
-    await MongoDBClient.connect();
-    // Send a ping to confirm a successful connection
-    await MongoDBClient.db("local").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await MongoDBClient.close();
+    mongoose.connect(process.env.MONGO_URI ?? "");
+  } catch (error) {
+    console.error(error);
+    mongoose.connection.useDb(process.env.MONGO_DB_NAME ?? "").close(true);
   }
+
+  mongoose.connection.on("error", (err) => {
+    console.error(err);
+  });
 
   await server.start(); //start the GraphQL server.
   server.applyMiddleware({ app });
-  await new Promise<void>((resolve) =>
-    httpServer.listen({ port: 4000 }, resolve) //run the server on port 4000
+  await new Promise<void>(
+    (resolve) => httpServer.listen({ port: 4000 }, resolve) //run the server on port 4000
   );
+
   console.log(`Server ready at http://localhost:4000${server.graphqlPath}`);
 }
 //in the end, run the server and pass in our Schema and Resolver.

@@ -1,10 +1,8 @@
 import { Sidebar } from "@/components/sidebar";
-import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/context/theme";
-import { UserContextProvider } from "@/context/user";
+import { ApolloWrapper } from "@/graphql/apollo-wrapper";
 import type { Metadata } from "next";
-
-import Link from "next/link";
 
 import "./globals.css";
 
@@ -21,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <UserContextProvider>
+        <ApolloWrapper>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -32,26 +30,11 @@ export default function RootLayout({
               <div className="col-span-3">
                 <Sidebar />
               </div>
-              <div className="col-span-9 p-6 w-full">
-                <div className="flex justify-between border-b items-center">
-                  <h1 className="text-4xl py-4">Dashboard</h1>
-                  <div className="space-x-4">
-                    <Button variant="default" className="rounded-sm">
-                      <Link href="/login">Portfolio</Link>
-                    </Button>
-                    <Button variant="secondary" className="rounded-sm">
-                      <Link href="/login">History</Link>
-                    </Button>
-                    <Button variant="secondary" className="rounded-sm">
-                      <Link href="/login">Analytics</Link>
-                    </Button>
-                  </div>
-                </div>
-                {children}
-              </div>
+              <div className="col-span-9 p-6 w-full">{children}</div>
             </div>
           </ThemeProvider>
-        </UserContextProvider>
+        </ApolloWrapper>
+        <Toaster />
       </body>
     </html>
   );

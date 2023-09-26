@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -11,7 +12,7 @@ import {
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
-
+import { usePathname } from "next/navigation";
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   //playlists: any;
 }
@@ -61,6 +62,8 @@ export function Sidebar({ className }: SidebarProps) {
       ),
     },
   ];
+
+  const path = usePathname();
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4 border-r min-h-screen w-3/12 fixed top-0 left-0">
@@ -79,14 +82,22 @@ export function Sidebar({ className }: SidebarProps) {
           <div className="space-y-1">
             {sideBarItems.map((data) => {
               return (
-                <Button
+                <Link
                   key={data.title}
-                  variant="secondary"
-                  className="w-full text-lg justify-start bg-transparent rounded-none hover:bg-green-500 hover:bg-opacity-20 hover:text-green-300"
+                  href={data.title.replace(" ", "").toLowerCase()}
                 >
-                  {data.icon}
-                  <Link href="/login">{data.title}</Link>
-                </Button>
+                  <Button
+                    variant="secondary"
+                    className={`w-full text-lg justify-start bg-transparent rounded-none hover:bg-green-500 hover:bg-opacity-20 hover:text-green-300 ${
+                      path.includes(data.title.replace(" ", "").toLowerCase())
+                        ? "bg-green-500 bg-opacity-20 text-green-300"
+                        : ""
+                    }`}
+                  >
+                    {data.icon}
+                    {data.title}
+                  </Button>
+                </Link>
               );
             })}
           </div>
